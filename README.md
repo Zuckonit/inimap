@@ -1,2 +1,2 @@
 # inimap
-turn ini into map
+play with ini and map in golang
