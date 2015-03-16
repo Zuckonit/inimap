@@ -49,10 +49,6 @@ func isFileExisted(filename string) bool {
 func ReadIO(iniString []byte) (*Config, error) {
 	cfg := make(Config)
 	lines := strings.Split(string(iniString), "\n")
-	if len(lines) == 0 {
-		return nil, errors.New("ini content is empty")
-	}
-
 	var curSec string
 	for _, line := range lines {
 		line = strings.TrimRight(line, "\r")
@@ -80,6 +76,9 @@ func ReadIO(iniString []byte) (*Config, error) {
 			}
 			cfg[curSec][strings.TrimSpace(s[0])] = strings.TrimSpace(s[1])
 		}
+	}
+	if len(cfg) == 0 {
+		return nil, errors.New("ini is invalid")
 	}
 	return &cfg, nil
 }

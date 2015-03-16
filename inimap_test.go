@@ -8,13 +8,13 @@ func TestReadFile(t *testing.T) {
 	testf0 := "nonexist.ini"
 	testf1 := "test.ini"
 
-	_, err0 := ReadFile(testf0)
-	if err0 == nil {
+	_, err := ReadFile(testf0)
+	if err == nil {
 		t.Errorf("file %s not existed", testf0)
 	}
 
-	cfg, err1 := ReadFile(testf1)
-	if err1 != nil {
+	cfg, err := ReadFile(testf1)
+	if err != nil {
 		t.Errorf("read %s ini failed", testf1)
 	}
 
@@ -37,5 +37,10 @@ func TestReadFile(t *testing.T) {
 	_, ok = subcfg["c"]
 	if ok {
 		t.Errorf("c is a comment")
+	}
+
+	cfg, err = ReadFile("test2.ini")
+	if err == nil || cfg != nil {
+		t.Errorf("test2.ini is invalid")
 	}
 }
