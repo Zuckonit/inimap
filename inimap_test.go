@@ -4,16 +4,16 @@ import (
 	"testing"
 )
 
-func TestRead(t *testing.T) {
+func TestReadFile(t *testing.T) {
 	testf0 := "nonexist.ini"
 	testf1 := "test.ini"
 
-	_, err0 := Read(testf0)
+	_, err0 := ReadFile(testf0)
 	if err0 == nil {
 		t.Errorf("file %s not existed", testf0)
 	}
 
-	cfg, err1 := Read(testf1)
+	cfg, err1 := ReadFile(testf1)
 	if err1 != nil {
 		t.Errorf("read %s ini failed", testf1)
 	}

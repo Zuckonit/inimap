@@ -46,17 +46,12 @@ func isFileExisted(filename string) bool {
 	return !fp.IsDir()
 }
 
-func Read(cfgPath string) (*Config, error) {
-	if !isFileExisted(cfgPath) {
-		return nil, errors.New("config file not existed")
-	}
-
-	data, err := ioutil.ReadFile(cfgPath)
-	if err != nil {
-		return nil, err
-	}
+func ReadIO(iniString []byte) (*Config, error) {
 	cfg := make(Config)
-	lines := strings.Split(string(data), "\n")
+	lines := strings.Split(string(iniString), "\n")
+	if len(lines) == 0 {
+		return nil, errors.New("ini content is empty")
+	}
 
 	var curSec string
 	for _, line := range lines {
@@ -87,4 +82,15 @@ func Read(cfgPath string) (*Config, error) {
 		}
 	}
 	return &cfg, nil
+}
+
+func ReadFile(cfgPath string) (*Config, error) {
+	if !isFileExisted(cfgPath) {
+		return nil, errors.New("config file not existed")
+	}
+	data, err := ioutil.ReadFile(cfgPath)
+	if err != nil {
+		return nil, err
+	}
+	return ReadIO(data)
 }
