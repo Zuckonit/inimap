@@ -11,6 +11,10 @@ import (
 type SubConfig map[string]string
 type Config map[string]SubConfig
 
+const (
+	COMMENT = ";"
+)
+
 func (cfg *Config) Set(sec, key, value string) {
 	(*cfg)[sec][key] = value
 }
@@ -53,7 +57,7 @@ func ReadIO(iniString []byte) (*Config, error) {
 	for _, line := range lines {
 		line = strings.TrimRight(line, "\r")
 		line = strings.TrimSpace(line)
-		if line == "" || strings.HasPrefix(line, ";") {
+		if line == "" || strings.HasPrefix(line, COMMENT) {
 			continue
 		}
 		if !strings.Contains(line, "=") && strings.HasPrefix(line, "[") &&
